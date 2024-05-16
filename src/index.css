@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.slick-dots .slick-active div{
+    border-right: 4px solid #262626 !important;
+    color:#222 !important;
+}
