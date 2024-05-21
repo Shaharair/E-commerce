@@ -1,6 +1,5 @@
 import React from 'react'
 import Container from './Container'
-import Flex from './Flex'
 import { FcLike } from "react-icons/fc";
 import { HiMiniArrowPath } from "react-icons/hi2";
 import { FaShoppingCart } from "react-icons/fa";

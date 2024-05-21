@@ -5,6 +5,7 @@ import Arrivalsitem from './Arrivalsitem'
 import { apiData } from './ContextApi'
 import Slider from "react-slick";
 import { HiArrowSmRight,HiArrowSmLeft } from "react-icons/hi";
+import { Link } from 'react-router-dom';
 
 
 
@@ -38,7 +39,9 @@ const Arrivals = () => {
         <h3 className="font-sans font-bold text-[36px] text-[#262626] pb-[30px]">New Arrivals</h3>
         <Slider {...settings}>
           {data.map((items) => (
+            <Link to="/products">
             <Arrivalsitem items={items} />
+            </Link>
           ))}
           </Slider>
       </Container>
