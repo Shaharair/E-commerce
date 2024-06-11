@@ -24,7 +24,6 @@ const Products = () => {
     let [brendShow, setBrendShow] = useState(false)
     let [priceShow, setPriceShow] = useState(false)
     let [slectShow, setSelectShow] = useState(false)
-    let [sortingShow, setSortingShow] = useState(false)
 
     let data = useContext(apiData)
 
@@ -46,6 +45,17 @@ const Products = () => {
         setCurrentPage(pageNumber + 1);
     }
 
+    let next = () =>{
+        if(currentPage < pageNumber.length){
+            setCurrentPage((state) => state + 1)
+        }
+    }
+
+    let prev = () =>{
+        if(currentPage > 1){
+            setCurrentPage((state) => state -1)
+        }
+    }
 
     return (
         <section className="py-[60px]">
@@ -132,23 +142,11 @@ const Products = () => {
                                 <div className="">
                                     <h3 className="font-sans font-semibold text-[18px] text-[#767676]">Sort by:</h3>
                                 </div>
-                                <div className=" flex items-center gap-[100px] border-2 border-[#767676] py-3 px-5">
-                                    <h4 className="font-sans font-medium text-[18px] text-[#767676]">Featured</h4>
-                                    <div onClick={() => setSortingShow(!sortingShow)} className="font-sans font-bold text-[24px]">
-                                        <MdOutlineArrowDropDown />
-                                        {sortingShow &&
-                                            <div className="">
-                                                <ul className="top-[60px] z-50 absolute left-[120px] border-2 border-[#767676] w-[205px]">
-                                                    <li className="font-sans font-semibold text-[18px] text-[#767676] text-center py-1 hover:bg-[#262626] hover:text-[white] duration-500 ease-in-out">Products 1</li>
-                                                    <li className="font-sans font-semibold text-[18px] text-[#767676] text-center py-1 hover:bg-[#262626] hover:text-[white] duration-500 ease-in-out">Products 2</li>
-                                                    <li className="font-sans font-semibold text-[18px] text-[#767676] text-center py-1 hover:bg-[#262626] hover:text-[white] duration-500 ease-in-out">Products 3</li>
-                                                    <li className="font-sans font-semibold text-[18px] text-[#767676] text-center py-1 hover:bg-[#262626] hover:text-[white] duration-500 ease-in-out">Products 4</li>
-                                                    <li className="font-sans font-semibold text-[18px] text-[#767676] text-center py-1 hover:bg-[#262626] hover:text-[white] duration-500 ease-in-out">Products 5</li>
-                                                </ul>
-                                            </div>
-                                        }
-                                    </div>
-                                </div>
+                               <select className="border-2 border-[#767676] py-3 px-5 outline-none font-sans font-semibold text-[18px] text-[#767676]">
+                                <option value="" className="font-sans font-semibold text-[18px] text-[#767676]">Features</option>
+                                <option value="" className="font-sans font-semibold text-[18px] text-[#767676]">Price</option>
+                                <option value="" className="font-sans font-semibold text-[18px] text-[#767676]">Catagory</option>
+                               </select>
                             </div>
                             <div className="w-[20%] flex items-center gap-4 relative">
                                 <div className="">
@@ -179,7 +177,7 @@ const Products = () => {
                                     <Post alData={alData}/>
                                 </div>
                                 <div className=" text-end">
-                                    <PaginationArea  pageNumber={pageNumber} Paginate={Paginate}/>
+                                    <PaginationArea  pageNumber={pageNumber} Paginate={Paginate} currentPage={currentPage} next={next} prev={prev} />
                                 </div>
                             </div>
                         </div>
