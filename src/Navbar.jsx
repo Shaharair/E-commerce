@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, {  useEffect, useRef, useState } from 'react'
 import Container from './Container'
 import Flex from './Flex'
 import { FaBars, FaSearch } from "react-icons/fa";
@@ -7,8 +7,11 @@ import { MdOutlineArrowDropDown } from "react-icons/md";
 import { FaCartPlus } from "react-icons/fa";
 import ImageOne from "./assets/image.png"
 import { RxCross2 } from "react-icons/rx";
+import {useSelector} from "react-redux"
 
 const Navbar = () => {
+
+let data = useSelector((state)=> state.product.cartItem)
   let [cartShow, setCartShow] = useState(false)
   let [ViewCartShow, setViewCartShow] = useState(false)
   let [UserShow, setUserShow] = useState(false)
@@ -85,7 +88,14 @@ const Navbar = () => {
               <MdOutlineArrowDropDown />
             </div>
             <div ref={ViewCartref} className="">
+              <div className=" relative">
               <FaCartPlus />
+              {data.length > 0 ?
+                  <div className="absolute h-[35px] w-[50px] left-[15px] top-[-20px] bg-[red] rounded-full border-4 border-[white] text-center font-sans font-semibold text-[18px] text-[white]">
+              {data.length}
+              </div>
+               : ""}
+              </div>
             </div>
           </div>
           {ViewCartShow &&

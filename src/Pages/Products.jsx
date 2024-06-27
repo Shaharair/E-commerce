@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Container from '../Container'
 import { IoMdArrowDropdown } from "react-icons/io";
 import { MdWindow } from "react-icons/md";
@@ -24,6 +24,8 @@ const Products = () => {
     let [brendShow, setBrendShow] = useState(false)
     let [priceShow, setPriceShow] = useState(false)
     let [slectShow, setSelectShow] = useState(false)
+    let [Category,setCategory] = useState([])
+    let [categoryFlter,setCategoryFilter] = useState([])
 
     let data = useContext(apiData)
 
@@ -37,7 +39,7 @@ const Products = () => {
 
     let pageNumber = []
 
-    for(let i= 0; i < Math.ceil(data.length / perPage); i++){
+    for(let i= 0; i < Math.ceil(categoryFlter.length > 0 ? categoryFlter : data.length / perPage); i++){
         pageNumber.push(i)
     }
 
@@ -57,6 +59,17 @@ const Products = () => {
         }
     }
 
+    useEffect(()=>{
+        setCategory([...new Set(data.map((items)=>items.category)) ])
+    },[data])
+
+    let handleSubcate = (citems) =>{
+    let categoryFilter = data.filter((items)=> items.category == citems)
+    setCategoryFilter(categoryFilter)
+    }
+
+
+
     return (
         <section className="py-[60px]">
             <Container>
@@ -71,62 +84,9 @@ const Products = () => {
                             {dropdownShow &&
                                 <div className="">
                                     <ul>
-                                        <li className=" font-sans font-medium text-[16px] text-[#767676] py-[30px] border-b-2">Category 1 </li>
-                                        <li className=" font-sans font-medium text-[16px] text-[#767676] py-[30px] border-b-2">Category 2 </li>
-                                        <li className=" font-sans font-medium text-[16px] text-[#767676] py-[30px] border-b-2">Category 3 </li>
-                                        <li className=" font-sans font-medium text-[16px] text-[#767676] py-[30px] border-b-2">Category 4 </li>
-                                        <li className=" font-sans font-medium text-[16px] text-[#767676] py-[30px] border-b-2">Category 5 </li>
-                                    </ul>
-                                </div>
-                            }
-                        </div>
-                        <div className="">
-                            <div onClick={() => setColorShow(!clorShow)} className="flex items-center gap-4 font-sans font-bold text-[24px]">
-                                <h4 className="font-sans font-bold text-[24px] text-[#262626] py-[20px]">Shop by Color</h4>
-                                <IoMdArrowDropdown />
-                            </div>
-                            {clorShow &&
-                                <div className=" ">
-                                    <ul>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] flex items-center gap-3 py-[30px] border-b-2"><h3 className="border-2 bg-[#262626] rounded-full h-3 w-3"></h3>Color 1</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] flex items-center gap-3 py-[30px] border-b-2"> <h3 className="border-2 bg-[#FF8686] rounded-full h-3 w-3"></h3>Color 2</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] flex items-center gap-3 py-[30px] border-b-2"> <h3 className="border-2 bg-[#7ED321] rounded-full h-3 w-3"></h3>Color 3</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] flex items-center gap-3 py-[30px] border-b-2"> <h3 className="border-2 bg-[#B6B6B6] rounded-full h-3 w-3"></h3>Color 4</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] flex items-center gap-3 py-[30px] border-b-2"> <h3 className="border-2 bg-[#15CBA5] rounded-full h-3 w-3"></h3>Color 5</li>
-                                    </ul>
-                                </div>
-                            }
-                        </div>
-                        <div className="">
-                            <div onClick={() => setBrendShow(!brendShow)} className="flex items-center gap-4 text-[24px]">
-                                <h4 className="font-sans font-bold text-[24px] text-[#262626] py-[20px]">Shop by Brand</h4>
-                                <IoMdArrowDropdown />
-                            </div>
-                            {brendShow &&
-                                <div className="">
-                                    <ul>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">Brand 1</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">Brand 2</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">Brand 3</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">Brand 4</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">Brand 5</li>
-                                    </ul>
-                                </div>
-                            }
-                        </div>
-                        <div className="">
-                            <div onClick={() => setPriceShow(!priceShow)} className="flex items-center gap-4 text-[24px]">
-                                <h4 className="font-sans font-bold text-[24px] text-[#262626] py-[20px]">Shop by Price</h4>
-                                <IoMdArrowDropdown />
-                            </div>
-                            {priceShow &&
-                                <div className="">
-                                    <ul>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">$0.00 - $9.99</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">$10.00 - $19.99</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">$20.00 - $29.99</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">$30.00 - $39.99</li>
-                                        <li className="font-sans font-medium text-[16px] text-[#767676] pb-[14px] py-[30px] border-b-2">$40.00 - $69.99</li>
+                                        {Category.map((items)=>(
+                                        <li onClick={()=>handleSubcate(items)} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">{items} </li>
+                                        ))}
                                     </ul>
                                 </div>
                             }
@@ -174,7 +134,7 @@ const Products = () => {
                         <div className="py-[50px]">
                             <div className="">
                                 <div className="flex justify-between flex-wrap">
-                                    <Post alData={alData}/>
+                                    <Post alData={alData} categoryFlter= {categoryFlter}/>
                                 </div>
                                 <div className=" text-end">
                                     <PaginationArea  pageNumber={pageNumber} Paginate={Paginate} currentPage={currentPage} next={next} prev={prev} />
