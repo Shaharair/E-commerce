@@ -4,11 +4,14 @@ import { apiData } from '../ContextApi'
 import { FaHeart, FaShoppingCart } from "react-icons/fa";
 import { TfiReload } from "react-icons/tfi";
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux'
+import { addTocart } from '../slice/ProductSlice';
 
-const Post = ({alData,categoryFlter}) => { 
+const Post = ({alData,categoryFlter,multiList}) => { 
     
     let [filterShow, setFilterShow] = useState([])
     let [cateShow, setCateShow] = useState(true)
+    let dispatch = useDispatch()
 
     useEffect(()=>{
         let filterAmi = categoryFlter.slice(0,5)
@@ -24,6 +27,10 @@ const Post = ({alData,categoryFlter}) => {
         let filterAmi = categoryFlter.slice(0,5)
         setFilterShow(filterAmi)
         setCateShow(true)
+    }
+
+    let handlepcart = (items) =>{
+        dispatch(addTocart({...items, qun: 1}))
     }
     
 
@@ -65,17 +72,19 @@ const Post = ({alData,categoryFlter}) => {
     }
        </div>
         :
-        alData.map((items) => (
-            <div className="w-[32%] py-5">
-                <Link to={`/products/${items.id}`}>
+        <div className={`${multiList == "activeList" ? "" : "flex justify-between flex-wrap"}`}>
+        {alData.map((items) => (
+                <div className="w-[32%] py-5">
                     <div className="">
                         <div className=" relative group overflow-hidden">
+                        <Link to={`/products/${items.id}`}>
                             <img src={items.thumbnail} className="h-[350px]" alt="" />
+                            </Link>
                             <div className="bg-[white] absolute left-0 h-[120px] duration-300 ease-in-out bottom-[-120px] w-full group-hover:bottom-[0] flex justify-end">
                                 <ul className="pr-5">
                                     <li className="flex items-center justify-end font-sans font-semibold text-[24px] text-[#767676] gap-4 hover:text-[#262626]">Add to Wish List <FaHeart /></li>
                                     <li className="flex items-center justify-end font-sans font-semibold text-[24px] text-[#767676] gap-4 hover:text-[#262626] py-2">Compare <TfiReload /></li>
-                                    <li className="flex items-center justify-end font-sans font-semibold text-[24px] text-[#767676] gap-4 hover:text-[#262626]">Add to Cart <FaShoppingCart /></li>
+                                    <li onClick={()=>handlepcart(items)} className="flex items-center justify-end font-sans font-semibold text-[24px] text-[#767676] gap-4 hover:text-[#262626]">Add to Cart <FaShoppingCart /></li>
                                 </ul>
                             </div>
                         </div>
@@ -85,9 +94,10 @@ const Post = ({alData,categoryFlter}) => {
                             <p className="font-sans font-semibold text-[18px] text-[#767676] pt-[20px]">${items.price}</p>
                         </div>
                     </div>
-                </Link>
             </div>
         ))
+        }
+         </div>
     }
 
         </>

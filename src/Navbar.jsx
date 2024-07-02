@@ -8,6 +8,7 @@ import { FaCartPlus } from "react-icons/fa";
 import ImageOne from "./assets/image.png"
 import { RxCross2 } from "react-icons/rx";
 import {useSelector} from "react-redux"
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -80,8 +81,9 @@ let data = useSelector((state)=> state.product.cartItem)
              {UserShow &&
              <div className="w-[200px] top-[30px] absolute z-50 left-0 border-2 border-[#F5F5F3]">
                 <ul>
-                  <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded">My Account</li>
-                  <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded">Log Out</li>
+                  <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded"><Link to="/myaccount">My Account</Link></li>
+                  <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded"><Link to="/loging">Loging</Link></li>
+                  <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded"><Link to="/singup">Sing up</Link></li>
                 </ul>
              </div>
               }

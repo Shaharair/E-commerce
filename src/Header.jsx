@@ -23,8 +23,8 @@ const Header = () => {
             <ul className={`lg:flex gap-8 absolute lg:static transition duration-700 ease-out ${show == true ? "bg-[red] top-[100px] left-[-0] w-full" : " top-[100px] left-[-200px]" } }`}>
                 <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]"><Link to="/">Home</Link></li>
                 <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]"><Link to="/products">Shop</Link></li>
-                <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]">About</li>
-                <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]">Contacts</li>
+                <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]"><Link to="/about">About</Link></li>
+                <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]"><Link to="/contact">Contacts</Link></li>
                 <li className="font-sans font-medium text-[18px] lg:text-[#767676] text-[white] hover:text-[#262626]">Journaly</li>
             </ul>
         </div>

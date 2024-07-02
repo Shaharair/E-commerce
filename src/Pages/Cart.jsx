@@ -3,6 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux"
 import { productDecrement, productIncrement, removeproduct } from '../Components/slice/ProductSlice';
 import { IoMdArrowDropdown } from "react-icons/io";
+import { Link } from 'react-router-dom';
 
 
 
@@ -147,7 +148,7 @@ const Cart = () => {
               </div>
             </div>
             <div className="pt-[30px] pb-[100px]">
-              <a href="$" className="font-sans font-semibold text-[18px] text-[#262626] border-2 border-[#262626] px-[40px] py-4 rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out">Proceed to Checkout</a>
+              <a className="font-sans font-semibold text-[18px] text-[#262626] border-2 border-[#262626] px-[40px] py-4 rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out"><Link to="/cheackout">Proceed to Checkout</Link></a>
             </div>
           </div>
         </div>
