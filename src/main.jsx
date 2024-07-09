@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import { ContextApi } from './Components/ContextApi.jsx';
 import store from './store.js';
 import { Provider } from 'react-redux'
+import firebaseConfig from './firebase.confic.js';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <ContextApi>

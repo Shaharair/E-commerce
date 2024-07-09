@@ -14,10 +14,6 @@ import PaginationArea from '../Components/Pagination/PaginationArea';
 
 
 
-
-
-
-
 const Products = () => {
     let [dropdownShow, setDropdownShow] = useState(false)
     let [clorShow, setColorShow] = useState(false)
@@ -31,7 +27,7 @@ const Products = () => {
     let data = useContext(apiData)
 
     let [currentPage, setCurrentPage] = useState(1)
-    let [perPage, setPerPage] = useState(6)
+    let [perPage, setPerPage] = useState(18)
 
     let lastpage = currentPage * perPage
     let firstpge = lastpage - perPage

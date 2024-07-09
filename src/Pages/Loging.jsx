@@ -17,12 +17,12 @@ const Loging = () => {
                 <div className="flex justify-between">
                     <div className="w-[50%] border-b-2">
                         <h3 className="font-sans font-semibold text-[24px] text-[#262626] pb-[10px]">Email address/Phone Number</h3>
-                        <h5 className="font-sans font-medium text-[16px] text-[#767676] pb-[20px]">company@domain.com</h5>
-                    </div>
+                        <input type="text" placeholder="Email address" className="font-sans font-medium text-[16px] text-[#767676] pb-[20px] outline-none" />
+                        </div>
                     <div className="w-[50%] mx-5 border-b-2">
                         <h3 className="font-sans font-semibold text-[24px] text-[#262626] pb-[10px]">Password</h3>
-                        <h5 className="font-sans font-medium text-[24px] text-[#767676] pb-[20px]">......</h5>
-                    </div>
+                        <input type="text" placeholder="Password" className="font-sans font-medium text-[16px] text-[#767676] pb-[20px] outline-none" />
+                        </div>
                 </div>
                 <div className="py-[50px] border-b-2">
                     <h3 className="font-sans font-semibold text-[18px] text-[#262626] border-2 border-[#262626] w-[200px] h-[60px] rounded leading-[60px] text-center hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out">Login</h3>

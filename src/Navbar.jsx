@@ -12,6 +12,7 @@ import { apiData } from './Components/ContextApi';
 const Navbar = () => {
   let info = useContext(apiData);
   let data = useSelector((state) => state.product.cartItem);
+  console.log(data)
   let [cartShow, setCartShow] = useState(false);
   let [ViewCartShow, setViewCartShow] = useState(false);
   let [UserShow, setUserShow] = useState(false);
@@ -22,6 +23,7 @@ const Navbar = () => {
   let ViewCartref = useRef();
   let Userref = useRef();
   let navigate = useNavigate();
+  console.log(data);
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -180,7 +182,7 @@ const Navbar = () => {
                         <Link to="/loging">Login</Link>
                       </li>
                       <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded">
-                        <Link to="/signup">Sign up</Link>
+                      <Link to="/signup">Signup</Link>
                       </li>
                     </ul>
                   </div>
@@ -201,20 +203,21 @@ const Navbar = () => {
               </div>
             </div>
 
-            {/* View Cart Dropdown */}
-            {ViewCartShow && (
+            {ViewCartShow && 
               <div className="w-[360px] z-50 absolute bg-[#F5F5F3] top-[30px] right-0">
-                <div className="py-4">
+           
+                {data.map((items)=>(
+                  <div className="py-4">
                   <div className="flex justify-around items-center">
                     <div className="">
-                      <img src={ImageOne} alt="Image" />
+                      <img className="w-[100px] h-[100px]" src={items.thumbnail} alt="" />
                     </div>
                     <div className="">
                       <h3 className="font-sans font-medium text-[18px] text-[#262626]">
-                        Black Smart Watch
+                        {items.title}
                       </h3>
                       <h2 className="font-sans font-medium text-[18px] text-[#262626]">
-                        $44.00
+                        ${items.price}
                       </h2>
                     </div>
                     <div className="font-sans font-bold text-[18px]">
@@ -227,26 +230,27 @@ const Navbar = () => {
                     </h3>
                     <div className="flex justify-around">
                       <div className="">
-                        <a
+                        <Link to="/cart"
                           className="w-[148px] h-[50px] border-2 border-[#262626] inline-block text-center leading-[50px] rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out font-sans font-semibold text-[18px]"
-                          href="#"
                         >
                           View Cart
-                        </a>
+                        </Link>
                       </div>
                       <div className="">
-                        <a
+                        <Link to="/cheackout"
                           className="w-[148px] h-[50px] border-2 border-[#262626] inline-block text-center leading-[50px] rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out font-sans font-semibold text-[18px]"
-                          href="#"
+                          
                         >
-                          Checkout
-                        </a>
+                        Checkout
+                        </Link>
+                        
                       </div>
                     </div>
                   </div>
                 </div>
+                ))}
               </div>
-            )}
+            }
           </div>
         </Flex>
       </Container>
