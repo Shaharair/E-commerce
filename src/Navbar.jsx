@@ -32,7 +32,7 @@ const Navbar = () => {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [cartShow,UserShow,ViewCartShow]);
 
   const handleClickOutside = (e) => {
     if (Cartref.current && Cartref.current.contains(e.target)) {
