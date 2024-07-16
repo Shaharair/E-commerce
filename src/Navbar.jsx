@@ -5,14 +5,15 @@ import { FaBars, FaSearch, FaUserAlt, FaCartPlus } from "react-icons/fa";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import ImageOne from "./assets/image.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from 'react-router-dom';
 import { apiData } from './Components/ContextApi';
+import { removeproduct } from './Components/slice/ProductSlice';
+import { toast } from 'react-toastify';
 
 const Navbar = () => {
   let info = useContext(apiData);
   let data = useSelector((state) => state.product.cartItem);
-  console.log(data)
   let [cartShow, setCartShow] = useState(false);
   let [ViewCartShow, setViewCartShow] = useState(false);
   let [UserShow, setUserShow] = useState(false);
@@ -22,8 +23,9 @@ const Navbar = () => {
   let Cartref = useRef();
   let ViewCartref = useRef();
   let Userref = useRef();
+  let userdone = useRef();
   let navigate = useNavigate();
-  console.log(data);
+  let dispatch = useDispatch()
 
   useEffect(() => {
     document.addEventListener("click", handleClickOutside);
@@ -48,6 +50,9 @@ const Navbar = () => {
     } else {
       setUserShow(false);
     }
+    if (userdone.current.contains(e.target)) {
+      setViewCartShow(true);
+    }
   };
 
   const handleInput = (e) => {
@@ -62,6 +67,27 @@ const Navbar = () => {
       setFocusedIndex(-1); // Reset focused index when search results change
     }
   };
+
+  let handleDelete = (index) => {
+    dispatch(removeproduct(index))
+  }
+
+  let handleToViewcart = () =>{
+    toast("Go to cart page")
+    setViewCartShow(false);
+    setTimeout(()=>{
+      navigate("/cart")
+    },1000)
+  }
+
+  let handleCheckout = () =>{
+    toast("Go to cheackout page")
+    setViewCartShow(false);
+    setTimeout(()=>{
+      navigate("/cheackout")
+    },1000)
+  }
+
 
   const handleSingleSearch = (id) => {
     navigate(`/products/${id}`);
@@ -138,9 +164,8 @@ const Navbar = () => {
                   {searchFilter.map((item, index) => (
                     <div
                       key={item.id}
-                      className={`py-4 ${
-                        index === focusedIndex ? "bg-gray-200" : ""
-                      }`}
+                      className={`py-4 ${index === focusedIndex ? "bg-gray-200" : ""
+                        }`}
                       onClick={() => handleSingleSearch(item.id)}
                     >
                       <div className="flex justify-around items-center">
@@ -182,7 +207,7 @@ const Navbar = () => {
                         <Link to="/loging">Login</Link>
                       </li>
                       <li className="font-sans font-semibold text-[18px] text-[#262626] hover:bg-[#262626] text-center hover:text-[white] duration-300 ease-in-out py-2 rounded">
-                      <Link to="/signup">Signup</Link>
+                        <Link to="/signup">Signup</Link>
                       </li>
                     </ul>
                   </div>
@@ -203,54 +228,52 @@ const Navbar = () => {
               </div>
             </div>
 
-            {ViewCartShow && 
-              <div className="w-[360px] z-50 absolute bg-[#F5F5F3] top-[30px] right-0">
-           
-                {data.map((items)=>(
-                  <div className="py-4">
-                  <div className="flex justify-around items-center">
-                    <div className="">
-                      <img className="w-[100px] h-[100px]" src={items.thumbnail} alt="" />
-                    </div>
-                    <div className="">
-                      <h3 className="font-sans font-medium text-[18px] text-[#262626]">
-                        {items.title}
-                      </h3>
-                      <h2 className="font-sans font-medium text-[18px] text-[#262626]">
-                        ${items.price}
-                      </h2>
-                    </div>
-                    <div className="font-sans font-bold text-[18px]">
-                      <RxCross2 />
-                    </div>
-                  </div>
-                  <div className="">
-                    <h3 className="pl-5 py-4 font-sans font-medium text-[18px] text-[#262626]">
-                      Subtotal: <span>$44.00</span>
-                    </h3>
-                    <div className="flex justify-around">
-                      <div className="">
-                        <Link to="/cart"
-                          className="w-[148px] h-[50px] border-2 border-[#262626] inline-block text-center leading-[50px] rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out font-sans font-semibold text-[18px]"
-                        >
-                          View Cart
-                        </Link>
+            <div ref={userdone} className="">
+              {ViewCartShow &&
+                <div className="w-[360px] z-50 absolute bg-[#F5F5F3] top-[30px] right-0">
+
+                  {data.map((items, index) => (
+                    <div className="py-4">
+                      <div className="flex justify-around items-center">
+                        <div className="">
+                          <img className="w-[100px] h-[100px]" src={items.thumbnail} alt="" />
+                        </div>
+                        <div className="">
+                          <h3 className="font-sans font-medium text-[18px] text-[#262626]">
+                            {items.title}
+                          </h3>
+                          <h2 className="font-sans font-medium text-[18px] text-[#262626]">
+                            ${items.price}
+                          </h2>
+                        </div>
+                        <div onClick={() => handleDelete(index)} className="font-sans font-bold text-[18px]">
+                          <RxCross2 />
+                        </div>
                       </div>
                       <div className="">
-                        <Link to="/cheackout"
-                          className="w-[148px] h-[50px] border-2 border-[#262626] inline-block text-center leading-[50px] rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out font-sans font-semibold text-[18px]"
-                          
-                        >
-                        Checkout
-                        </Link>
-                        
+                        <div className="flex justify-around">
+                          <div className="">
+                            <a onClick={handleToViewcart}
+                              className="w-[148px] h-[50px] border-2 border-[#262626] inline-block text-center leading-[50px] rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out font-sans font-semibold text-[18px]"
+                            >
+                              View Cart
+                            </a>
+                          </div>
+                          <div className="">
+                            <a onClick={handleCheckout}
+                              className="w-[148px] h-[50px] border-2 border-[#262626] inline-block text-center leading-[50px] rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out font-sans font-semibold text-[18px]"
+
+                            >
+                              Checkout
+                              </a>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-                ))}
-              </div>
-            }
+              }
+            </div>
           </div>
         </Flex>
       </Container>

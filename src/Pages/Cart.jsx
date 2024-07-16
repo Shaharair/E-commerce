@@ -3,7 +3,9 @@ import { RxCross2 } from "react-icons/rx";
 import { useDispatch, useSelector } from "react-redux"
 import { productDecrement, productIncrement, removeproduct } from '../Components/slice/ProductSlice';
 import { IoMdArrowDropdown } from "react-icons/io";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -14,6 +16,7 @@ const Cart = () => {
 
   let dispatch = useDispatch()
   let data = useSelector((state) => state.product.cartItem)
+  let nevigate = useNavigate()
 
   let handleIncrement = (index) => {
     dispatch(productIncrement(index))
@@ -27,13 +30,21 @@ const Cart = () => {
     dispatch(removeproduct(index))
   }
 
-  const {totalPrice, totalQuantity} = data.reduce((acc, item)=>{
+  const { totalPrice, totalQuantity } = data.reduce((acc, item) => {
     acc.totalPrice += item.price * item.qun
     acc.totalQuantity += item.qun
 
     return acc
 
-    },{totalPrice:0, totalQuantity:0})
+  }, { totalPrice: 0, totalQuantity: 0 })
+
+
+  let handleCheckout = () => {
+    toast("Go to cheackout page")
+    setTimeout(() => {
+      nevigate("/cheackout")
+    }, 2000)
+  }
 
   return (
     <section>
@@ -132,7 +143,7 @@ const Cart = () => {
               </div>
               <div className="flex w-[400px] justify-between border-b-2 border-[] py-3">
                 <div className="">
-                  <h3  className="font-sans font-semibold text-[18px] text-[#262626] pl-[30px]">Quantity:</h3>
+                  <h3 className="font-sans font-semibold text-[18px] text-[#262626] pl-[30px]">Quantity:</h3>
                 </div>
                 <div className="">
                   <h4 className="font-sans font-medium text-[18px] text-[#767676] pr-5">{totalQuantity}</h4>
@@ -147,11 +158,12 @@ const Cart = () => {
                 </div>
               </div>
             </div>
-            <div className="pt-[30px] pb-[100px]">
+            <div onClick={handleCheckout} className="pt-[30px] pb-[100px]">
               <a className="font-sans font-semibold text-[18px] text-[#262626] border-2 border-[#262626] px-[40px] py-4 rounded hover:bg-[#262626] hover:text-[white] duration-300 ease-in-out"><Link to="/cheackout">Proceed to Checkout</Link></a>
             </div>
           </div>
         </div>
+        <ToastContainer />
       </div>
     </section>
   )

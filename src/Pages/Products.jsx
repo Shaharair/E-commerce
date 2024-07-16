@@ -23,6 +23,9 @@ const Products = () => {
     let [Category, setCategory] = useState([])
     let [categoryFlter, setCategoryFilter] = useState([])
     let [multiList, setMultiList] = useState('')
+    let [lowprice, setLowprice] = useState("")
+    let [highprice, setHighprice] = useState("")
+    let [filterprice, setFilterprice] = useState([])
 
     let data = useContext(apiData)
 
@@ -65,8 +68,15 @@ const Products = () => {
         setCategoryFilter(categoryFilter)
     }
 
-    let handleList = () =>{
+    let handleList = () => {
         setMultiList("activeList")
+    } 
+
+    let handlePrice = (value) =>{
+        setLowprice(value.low)
+        setHighprice(value.high)
+        let pricefilter = data.filter((items)=>items.price > value.low && items.price < value.high)
+        setFilterprice(pricefilter);
     }
 
 
@@ -92,15 +102,36 @@ const Products = () => {
                                 </div>
                             }
                         </div>
+                        <div className="pt-[20px]">
+                            <div onClick={() => setPriceShow(!priceShow)} className="flex items-center gap-4 font-sans font-bold text-[24px]">
+                                <h3 className="font-sans font-bold text-[24px] text-[#262626]">Shop by Price</h3>
+                                <IoMdArrowDropdown />
+                            </div>
+                            {priceShow &&
+                                <div className="">
+                                    <ul>
+                                        <li onClick={()=>handlePrice({low:0,high:10})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $0-$10</li>
+                                        <li onClick={()=>handlePrice({low:10,high:20})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $10-$20</li>
+                                        <li onClick={()=>handlePrice({low:20,high:30})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $20-$30</li>
+                                        <li onClick={()=>handlePrice({low:30,high:40})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $30-$40</li>
+                                        <li onClick={()=>handlePrice({low:40,high:80})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $40-$80</li>
+                                        <li onClick={()=>handlePrice({low:80,high:160})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $80-$160</li>
+                                        <li onClick={()=>handlePrice({low:160,high:300})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $160-$300</li>
+                                        <li onClick={()=>handlePrice({low:300,high:600})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $300-$600</li>
+                                        <li onClick={()=>handlePrice({low:600,high:5000})} className=" font-sans font-semibold capitalize text-[18px] text-[#262626] py-[30px] border-b-2">Price $600-$5000</li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
                     </div>
                     <div className="w-[75%]">
                         <div className="flex justify-between">
                             <div className=" w-[40%] flex gap-8">
-                                <div onClick={()=>setMultiList("")} className="">
+                                <div onClick={() => setMultiList("")} className="">
                                     <MdWindow className={`border-2 border-[#767676] h-[60px] w-[60px] py-3 ${multiList == "activeList" ? "" : "bg-black text-white"}`} />
                                 </div>
                                 <div onClick={handleList} className="">
-                                    <AiOutlineBars className={`border-2 border-[#767676] h-[60px] w-[60px] py-3 ${multiList == "" ? "" :"bg-black text-white"}`} />
+                                    <AiOutlineBars className={`border-2 border-[#767676] h-[60px] w-[60px] py-3 ${multiList == "" ? "" : "bg-black text-white"}`} />
                                 </div>
                             </div>
                             <div className=" w-[40%] flex gap-4  items-center relative">
@@ -139,7 +170,7 @@ const Products = () => {
                         <div className="py-[50px]">
                             <div className="">
                                 <div className="">
-                                    <Post alData={alData} categoryFlter={categoryFlter} multiList={multiList} />
+                                    <Post alData={alData} categoryFlter={categoryFlter} multiList={multiList} filterprice={filterprice} />
                                 </div>
                                 <div className=" text-end">
                                     <PaginationArea pageNumber={pageNumber} Paginate={Paginate} currentPage={currentPage} next={next} prev={prev} />
